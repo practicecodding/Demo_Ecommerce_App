@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         binding.carousel.addData(new CarouselItem("https://img.lovepik.com/element/45010/2119.png_860.png","Carousel One"));
         binding.carousel.addData(new CarouselItem("https://t3.ftcdn.net/jpg/02/77/69/26/360_F_277692680_b65wdSQDuWZRrKwIUmGQo0zwND6n0MZR.jpg","Carousel Two"));
 
+
     }
 
     void initCategories(){
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         categories.add(new Category("Others","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","#00BCD4","Some Description Others",4));
         categories.add(new Category("Entertainment","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","#009688","Some Description Games",3));
         categories.add(new Category("Job","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","#CDDC39","Some Description Business",2));
+        categories.add(new Category("Outdoor","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","#FF5722","Some Description Sports",1));
         categories.add(new Category("Outdoor","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","#FF5722","Some Description Sports",1));
 
         categoryAdapter = new CategoryAdapter(this,categories);
