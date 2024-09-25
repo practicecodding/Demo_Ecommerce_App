@@ -16,13 +16,17 @@ import com.hamidul.demoecommerceapp.databinding.ItemCategoriesBinding;
 import com.hamidul.demoecommerceapp.model.Category;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import kotlin.CharCodeJVMKt;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
 
     Context context;
-    ArrayList<Category> categories;
+    ArrayList<HashMap<String,String>> categories;
+    HashMap<String,String> hashMap;
 
-    public CategoryAdapter(Context context, ArrayList<Category> categories) {
+    public CategoryAdapter(Context context, ArrayList<HashMap<String,String>> categories) {
         this.context = context;
         this.categories = categories;
     }
@@ -36,12 +40,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
 
-        Category category = categories.get(position);
-        holder.binding.label.setText(Html.fromHtml(category.getName()));
+        hashMap = categories.get(position);
+        String id = hashMap.get("id");
+        String name = hashMap.get("name");
+        String color = hashMap.get("color");
+        String imageUrl = hashMap.get("imageUrl");
+
+        holder.binding.label.setText(Html.fromHtml(name));
         Glide.with(context)
-                .load(category.getIcon())
+                .load(imageUrl)
                 .into(holder.binding.image);
-        holder.binding.image.setBackgroundColor(Color.parseColor(category.getColor()));
+        holder.binding.image.setBackgroundColor(Color.parseColor("#"+color));
 
 
     }
