@@ -13,12 +13,14 @@ import com.hamidul.demoecommerceapp.R;
 import com.hamidul.demoecommerceapp.databinding.ItemProductBinding;
 import com.hamidul.demoecommerceapp.model.Product;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
 
     Context context;
     ArrayList<Product> products;
+    DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     public ProductAdapter(Context context, ArrayList<Product> products) {
         this.context = context;
@@ -40,7 +42,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .load(product.getImage())
                 .into(holder.binding.image);
         holder.binding.label.setText(product.getName());
-        holder.binding.price.setText("BDT : "+product.getPrice());
+        holder.binding.price.setText("BDT : "+decimalFormat.format(product.getPrice())+" TK");
 
 
     }
