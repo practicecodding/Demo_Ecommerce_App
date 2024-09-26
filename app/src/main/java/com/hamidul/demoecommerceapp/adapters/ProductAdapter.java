@@ -44,7 +44,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.binding.label.setText(product.getName());
         holder.binding.price.setText("BDT : "+decimalFormat.format(product.getPrice())+" TK");
 
-
     }
 
     @Override
