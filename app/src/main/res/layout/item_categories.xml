@@ -17,7 +17,7 @@
         android:scaleType="centerCrop"
         app:riv_mutate_background="true"
         android:background="#00BCD4"
-        android:padding="5dp"
+        android:padding="3dp"
         android:layout_gravity="center"
         />
 

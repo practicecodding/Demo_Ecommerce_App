@@ -8,4 +8,14 @@
     </style>
 
     <style name="Theme.DemoEcommerceApp" parent="Base.Theme.DemoEcommerceApp" />
+
+
+    <style name="Base.Theme.DemoEcommerceApp.Actionbar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">@color/orange</item>
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+
 </resources>
