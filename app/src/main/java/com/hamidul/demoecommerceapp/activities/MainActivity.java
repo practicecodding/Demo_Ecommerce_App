@@ -47,14 +47,48 @@ public class MainActivity extends AppCompatActivity {
 
         getCategories();
         getProducts();
-        initCarousel();
+        getCarousel();
+
+    }
+
+    private void getCarousel() {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_CAROUSEL_URL, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                for (int i=0; i<response.length(); i++){
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+
+                        binding.carousel.addData(new CarouselItem(
+                                jsonObject.getString("image_url"),
+                                jsonObject.getString("caption")
+                        ));
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, "Server Error : "+error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        requestQueue.add(jsonArrayRequest);
+
 
     }
 
     private void initCarousel() {
-        binding.carousel.addData(new CarouselItem("https://png.pngtree.com/png-vector/20220124/ourmid/pngtree-offer-text-vector-file-png-image_4360383.png","Carousel Three"));
-        binding.carousel.addData(new CarouselItem("https://img.lovepik.com/element/45010/2119.png_860.png","Carousel One"));
-        binding.carousel.addData(new CarouselItem("https://t3.ftcdn.net/jpg/02/77/69/26/360_F_277692680_b65wdSQDuWZRrKwIUmGQo0zwND6n0MZR.jpg","Carousel Two"));
+
+        binding.carousel.addData(new CarouselItem("",""));
+        binding.carousel.addData(new CarouselItem("",""));
 
 
     }
@@ -104,26 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
         requestQueue.add(jsonArrayRequest);
 
-
-    }
-
-    void initProducts(){
-
-        products = new ArrayList<>();
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-//        products.add(new Product("Test Only","https://img.lovepik.com/png/20230929/vector-icon-category-picture-pictures-picture-album_25896_wh1200.png","Some Status",250,50,6,1));
-
-        productAdapter = new ProductAdapter(this,products);
-        binding.productList.setLayoutManager(new GridLayoutManager(this,2));
-        binding.productList.setAdapter(productAdapter);
 
     }
 
