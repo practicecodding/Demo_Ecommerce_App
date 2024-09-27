@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getCategories();
-        getProducts();
+        getProducts();      
         getCarousel();
 
     }
