@@ -2,12 +2,29 @@ package com.hamidul.demoecommerceapp.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.PixelCopy;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.hamidul.demoecommerceapp.R;
 import com.hamidul.demoecommerceapp.databinding.ActivityProductDetailBinding;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -28,6 +45,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 .load(image)
                 .into(binding.productImage);
 
+        getProductDetails(name);
 
         getSupportActionBar().setTitle(name);
 
@@ -36,9 +54,48 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     }
 
-    void getProductDetails(int id){
+    void getProductDetails(String sName){
+
+        String url = "https://dummyjson.com/products";
+
+        RequestQueue requestQueue = Volley.newRequestQueue(ProductDetailActivity.this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    JSONArray jsonArray = response.getJSONArray("products");
+
+                    for (int i=0; i<jsonArray.length(); i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String name = jsonObject.optString("title");
+                        if (name.equals(sName)){
+                            String description = jsonObject.optString("description");
+                            binding.productDescription.setText(Html.fromHtml(description));
+                            break;
+                        }
+                        else {
+                            binding.productDescription.setText("Something Wrong Please Contact This Owner");
+                        }
 
 
+                    }
+
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ProductDetailActivity.this, "Server Error"+error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
 
     }
 
