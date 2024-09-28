@@ -85,14 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initCarousel() {
-
-        binding.carousel.addData(new CarouselItem("",""));
-        binding.carousel.addData(new CarouselItem("",""));
-
-
-    }
-
     void getProducts(){
 
         products = new ArrayList<>();
