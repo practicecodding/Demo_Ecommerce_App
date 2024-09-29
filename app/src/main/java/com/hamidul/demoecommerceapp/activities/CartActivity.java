@@ -56,6 +56,8 @@ public class CartActivity extends AppCompatActivity {
         binding.cartList.addItemDecoration(itemDecoration);
         binding.cartList.setAdapter(cartAdapter);
 
+        binding.subtotal.setText(String.format("BDT %.2f",cart.getTotalPrice()));
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }

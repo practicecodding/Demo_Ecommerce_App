@@ -44,7 +44,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .load(product.getImage())
                 .into(holder.binding.image);
         holder.binding.label.setText(product.getName());
-        holder.binding.price.setText("BDT : "+decimalFormat.format(product.getPrice())+" TK");
+//        holder.binding.price.setText("BDT : "+decimalFormat.format(product.getPrice())+" TK");
+        holder.binding.price.setText(String.format("BDT %.2f",product.getPrice())+" TK");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
