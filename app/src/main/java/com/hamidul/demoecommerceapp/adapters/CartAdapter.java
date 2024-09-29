@@ -43,6 +43,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
                 .into(holder.binding.image);
         holder.binding.name.setText(product.getName());
         holder.binding.price.setText("TK " + product.getPrice());
+        holder.binding.quantity.setText(product.getQuantity() + " item(s)");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +59,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
 
                 quantityDialogBinding.productName.setText(product.getName());
                 quantityDialogBinding.productStock.setText("Stock : "+product.getStock());
-                quantityDialogBinding.quantity.setText(product.getQuantity());
+                quantityDialogBinding.quantity.setText(String.valueOf(product.getQuantity()));
 
                 int stock = product.getStock();
 
