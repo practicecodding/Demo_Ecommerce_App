@@ -14,8 +14,12 @@ import com.hamidul.demoecommerceapp.R;
 import com.hamidul.demoecommerceapp.adapters.CartAdapter;
 import com.hamidul.demoecommerceapp.databinding.ActivityCartBinding;
 import com.hamidul.demoecommerceapp.model.Product;
+import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.model.Item;
+import com.hishd.tinycart.util.TinyCartHelper;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -31,9 +35,18 @@ public class CartActivity extends AppCompatActivity {
 
         products = new ArrayList<>();
 
-        products.add(new Product("product 1","______","123",500,50,24,1));
-        products.add(new Product("product 2","______","456",400,40,14,2));
-        products.add(new Product("product 3","______","789",300,30,4,3));
+        Cart cart = TinyCartHelper.getCart();
+
+        for (Map.Entry<Item, Integer> item: cart.getAllItemsWithQty().entrySet()){
+
+            Product product = (Product) item.getKey();
+            int quantity = item.getValue();
+
+            product.setQuantity(quantity);
+
+            products.add(product);
+
+        }
 
         cartAdapter = new CartAdapter(CartActivity.this,products);
 

@@ -14,6 +14,7 @@ foreach($result as $item){
 	
 	$products['id'] = (int) $item['id'];
 	$products['name'] = $item['name'];
+	$products['description'] = $item['description'];
 	$products['image_url'] = $item['image_url'];
 	$products['status'] = $item['status'];
 	$products['price'] =(double)$item['price'];

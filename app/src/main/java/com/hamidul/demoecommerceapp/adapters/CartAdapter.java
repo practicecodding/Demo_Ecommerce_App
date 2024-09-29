@@ -58,6 +58,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
 
                 quantityDialogBinding.productName.setText(product.getName());
                 quantityDialogBinding.productStock.setText("Stock : "+product.getStock());
+                quantityDialogBinding.quantity.setText(product.getQuantity());
 
                 int stock = product.getStock();
 

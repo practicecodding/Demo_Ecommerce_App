@@ -7,6 +7,7 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.PixelCopy;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,12 +17,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.hamidul.demoecommerceapp.R;
 import com.hamidul.demoecommerceapp.databinding.ActivityProductDetailBinding;
+import com.hamidul.demoecommerceapp.model.Product;
+import com.hamidul.demoecommerceapp.utils.Constants;
+import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.util.TinyCartHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +39,8 @@ import java.util.HashMap;
 public class ProductDetailActivity extends AppCompatActivity {
 
     ActivityProductDetailBinding binding;
+
+    Product currentProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +57,22 @@ public class ProductDetailActivity extends AppCompatActivity {
                 .load(image)
                 .into(binding.productImage);
 
-        getProductDetails(name);
+        getProductDetails(id);
 
         getSupportActionBar().setTitle(name);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Cart cart = TinyCartHelper.getCart();
+
+        binding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                cart.addItem(currentProduct,1);
+
+            }
+        });
 
 
     }
@@ -72,7 +91,61 @@ public class ProductDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void getProductDetails(String sName){
+    private void getProductDetails(int mId){
+
+        RequestQueue requestQueue = Volley.newRequestQueue(ProductDetailActivity.this);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_PRODUCTS_URL, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                for (int i=0; i<response.length(); i++){
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        int id = jsonObject.getInt("id");
+
+                        if (id==mId){
+                            String description = jsonObject.optString("description");
+                            binding.productDescription.setText(Html.fromHtml(description));
+
+                            currentProduct = new Product(
+                                    jsonObject.getString("name"),
+                                    jsonObject.getString("image_url"),
+                                    jsonObject.getString("status"),
+                                    jsonObject.getDouble("price"),
+                                    jsonObject.getDouble("discount"),
+                                    jsonObject.getInt("stock"),
+                                    jsonObject.getInt("id")
+                            );
+
+                            break;
+
+                        }
+                        else {
+                            binding.productDescription.setText("Something Wrong Please Contact This Owner");
+                        }
+
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ProductDetailActivity.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        requestQueue.add(jsonArrayRequest);
+
+
+    }
+
+    void getProductDetailsWithDummyJSON(String sName){
 
         String url = "https://dummyjson.com/products";
 
