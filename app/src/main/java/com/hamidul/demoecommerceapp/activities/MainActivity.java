@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Product> products;
     ArrayList<HashMap<String,String>> arrayList = new ArrayList<>();
     HashMap<String,String> hashMap;
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +182,12 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
 
 
+    }
+
+    private void setToast (String message){
+        if (toast!=null) toast.cancel();
+        toast = Toast.makeText(MainActivity.this,message,Toast.LENGTH_LONG);
+        toast.show();
     }
 
 

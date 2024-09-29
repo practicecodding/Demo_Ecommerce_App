@@ -1,6 +1,7 @@
 package com.hamidul.demoecommerceapp.activities;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class CartActivity extends AppCompatActivity {
     ActivityCartBinding binding;
     CartAdapter cartAdapter;
     ArrayList<Product> products;
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,12 @@ public class CartActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return super.onSupportNavigateUp();
+    }
+
+    private void setToast (String message){
+        if (toast!=null) toast.cancel();
+        toast = Toast.makeText(CartActivity.this,message,Toast.LENGTH_LONG);
+        toast.show();
     }
 
 

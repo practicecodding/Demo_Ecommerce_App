@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.hamidul.demoecommerceapp.R;
+import com.hamidul.demoecommerceapp.activities.ProductDetailActivity;
 import com.hamidul.demoecommerceapp.databinding.ItemCartBinding;
 import com.hamidul.demoecommerceapp.databinding.QuantityDialogBinding;
 import com.hamidul.demoecommerceapp.model.Product;
@@ -23,6 +25,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
 
     Context context;
     ArrayList<Product> products;
+    Toast toast;
 
     public CartAdapter(Context context, ArrayList<Product> products) {
         this.context = context;
@@ -104,6 +107,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
             super(itemView);
             binding = ItemCartBinding.bind(itemView);
         }
+    }
+
+    private void setToast (String message){
+        if (toast!=null) toast.cancel();
+        toast = Toast.makeText(context,message,Toast.LENGTH_LONG);
+        toast.show();
     }
 
 

@@ -41,6 +41,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     ActivityProductDetailBinding binding;
 
     Product currentProduct;
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 cart.addItem(currentProduct,1);
+
+                setToast("Added to cart");
 
             }
         });
@@ -136,7 +139,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ProductDetailActivity.this, ""+error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProductDetailActivity.this, "Server Error "+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -196,4 +199,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         finish();
         return super.onSupportNavigateUp();
     }
+
+    private void setToast (String message){
+        if (toast!=null) toast.cancel();
+        toast = Toast.makeText(ProductDetailActivity.this,message,Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+
 }

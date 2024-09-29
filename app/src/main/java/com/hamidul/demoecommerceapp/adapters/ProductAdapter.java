@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     Context context;
     ArrayList<Product> products;
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
+    Toast toast;
 
     public ProductAdapter(Context context, ArrayList<Product> products) {
         this.context = context;
@@ -44,8 +46,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .load(product.getImage())
                 .into(holder.binding.image);
         holder.binding.label.setText(product.getName());
+        holder.binding.price.setText(String.format("BDT %.2f",product.getPrice()));
 //        holder.binding.price.setText("BDT : "+decimalFormat.format(product.getPrice())+" TK");
-        holder.binding.price.setText(String.format("BDT %.2f",product.getPrice())+" TK");
+//        holder.binding.price.setText(String.format("BDT %.2f",product.getPrice())+" TK");
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +81,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             super(itemView);
             binding = ItemProductBinding.bind(itemView);
         }
+    }
+
+    private void setToast (String message){
+        if (toast!=null) toast.cancel();
+        toast = Toast.makeText(context,message,Toast.LENGTH_LONG);
+        toast.show();
     }
 
 }

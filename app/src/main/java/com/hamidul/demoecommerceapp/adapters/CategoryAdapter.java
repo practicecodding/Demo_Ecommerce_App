@@ -6,12 +6,14 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.hamidul.demoecommerceapp.R;
+import com.hamidul.demoecommerceapp.activities.ProductDetailActivity;
 import com.hamidul.demoecommerceapp.databinding.ItemCategoriesBinding;
 import com.hamidul.demoecommerceapp.model.Category;
 
@@ -25,6 +27,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     Context context;
     ArrayList<HashMap<String,String>> categories;
     HashMap<String,String> hashMap;
+    Toast toast;
 
     public CategoryAdapter(Context context, ArrayList<HashMap<String,String>> categories) {
         this.context = context;
@@ -70,6 +73,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             binding = ItemCategoriesBinding.bind(itemView);
 
         }
+    }
+
+
+    private void setToast (String message){
+        if (toast!=null) toast.cancel();
+        toast = Toast.makeText(context,message,Toast.LENGTH_LONG);
+        toast.show();
     }
 
 }
