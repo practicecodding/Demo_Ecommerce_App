@@ -70,12 +70,31 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
                     @Override
                     public void onClick(View view) {
 
+                        int quantity = product.getQuantity();
+
+                        if (quantity>1) quantity--;
+
+                        product.setQuantity(quantity);
+                        quantityDialogBinding.quantity.setText(String.valueOf(quantity));
+
                     }
                 });
 
                 quantityDialogBinding.positiveBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        int quantity = product.getQuantity();
+
+                        quantity++;
+
+                        if (quantity>product.getStock()){
+                            setToast("Max stock available : "+product.getQuantity());
+                            return;
+                        }else {
+                            product.setQuantity(quantity);
+                            quantityDialogBinding.quantity.setText(String.valueOf(quantity));
+                        }
 
                     }
                 });
