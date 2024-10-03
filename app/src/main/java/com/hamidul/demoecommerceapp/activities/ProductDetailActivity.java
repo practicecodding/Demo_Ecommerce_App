@@ -72,7 +72,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                 cart.addItem(currentProduct,1);
 
-                setToast("Added to cart");
+                binding.addToCartBtn.setEnabled(false);
+                binding.addToCartBtn.setText("Added in cart");
 
             }
         });

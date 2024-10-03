@@ -18,6 +18,8 @@ import com.hamidul.demoecommerceapp.activities.ProductDetailActivity;
 import com.hamidul.demoecommerceapp.databinding.ItemCartBinding;
 import com.hamidul.demoecommerceapp.databinding.QuantityDialogBinding;
 import com.hamidul.demoecommerceapp.model.Product;
+import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.util.TinyCartHelper;
 
 import java.util.ArrayList;
 
@@ -26,10 +28,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
     Context context;
     ArrayList<Product> products;
     Toast toast;
+    CartListener cartListener;
+    Cart cart;
 
-    public CartAdapter(Context context, ArrayList<Product> products) {
+    public interface CartListener {
+
+        public void onQuantityChanged();
+
+    }
+
+    public CartAdapter(Context context, ArrayList<Product> products, CartListener cartListener) {
         this.context = context;
         this.products = products;
+        this.cartListener = cartListener;
+        cart = TinyCartHelper.getCart();
     }
 
     @NonNull
@@ -77,6 +89,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
                         product.setQuantity(quantity);
                         quantityDialogBinding.quantity.setText(String.valueOf(quantity));
 
+                        notifyDataSetChanged();
+                        cart.updateItem(product,product.getQuantity());
+                        cartListener.onQuantityChanged();
+
                     }
                 });
 
@@ -96,13 +112,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
                             quantityDialogBinding.quantity.setText(String.valueOf(quantity));
                         }
 
+                        notifyDataSetChanged();
+                        cart.updateItem(product,product.getQuantity());
+                        cartListener.onQuantityChanged();
+
                     }
                 });
 
                 quantityDialogBinding.saveBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        dialog.dismiss();
+                        notifyDataSetChanged();
+                        cart.updateItem(product,product.getQuantity());
+                        cartListener.onQuantityChanged();
                     }
                 });
 

@@ -50,7 +50,12 @@ public class CartActivity extends AppCompatActivity {
 
         }
 
-        cartAdapter = new CartAdapter(CartActivity.this,products);
+        cartAdapter = new CartAdapter(CartActivity.this, products, new CartAdapter.CartListener() {
+            @Override
+            public void onQuantityChanged() {
+                binding.subtotal.setText(String.format("BDT %.2f",cart.getTotalPrice()));
+            }
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this,layoutManager.getOrientation());
