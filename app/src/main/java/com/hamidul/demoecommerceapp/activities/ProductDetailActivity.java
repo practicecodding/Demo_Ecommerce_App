@@ -71,7 +71,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 cart.addItem(currentProduct,1);
-
                 binding.addToCartBtn.setEnabled(false);
                 binding.addToCartBtn.setText("Added in cart");
 

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,82 +29,51 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Product Name"
+                    android:text="Remove this item from cart ?"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
                     android:maxLines="1"
                     android:ellipsize="end"
                     />
 
-                <TextView
-                    android:id="@+id/productStock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="right"
-                    android:text="0" />
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="#EBEBEB"
-                android:padding="3dp"
+                android:gravity="right"
+                android:layout_marginTop="20dp"
                 >
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/negativeBtn"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-"
-                    android:textSize="30sp"
+                    android:id="@+id/noBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/custom_button"
+                    android:text="No"
                     android:textColor="@color/white"
-                    android:background="@color/orange"
+                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                     android:foreground="?attr/selectableItemBackground"
-                    />
-
-                <TextView
-                    android:id="@+id/quantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="1"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:textSize="16sp"
                     />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/positiveBtn"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="+"
-                    android:textSize="30sp"
+                    android:id="@+id/yesBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/custom_button"
+                    android:text="Yes"
                     android:textColor="@color/white"
-                    android:background="@color/orange"
+                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
                     android:foreground="?attr/selectableItemBackground"
+                    android:layout_marginLeft="20dp"
                     />
 
-            </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/saveBtn"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:layout_gravity="right"
-                android:background="@color/orange"
-                android:text="Save"
-                android:textColor="@color/white"
-                tools:ignore="TouchTargetSizeCheck,TextContrastCheck"
-                android:foreground="?attr/selectableItemBackground"
-                />
+            </LinearLayout>
 
 
         </LinearLayout>
