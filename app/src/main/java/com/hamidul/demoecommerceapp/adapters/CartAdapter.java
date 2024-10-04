@@ -1,22 +1,17 @@
 package com.hamidul.demoecommerceapp.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.hamidul.demoecommerceapp.R;
-import com.hamidul.demoecommerceapp.activities.ProductDetailActivity;
 import com.hamidul.demoecommerceapp.databinding.ItemCartBinding;
-import com.hamidul.demoecommerceapp.databinding.QuantityDialogBinding;
 import com.hamidul.demoecommerceapp.model.Product;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.util.TinyCartHelper;
@@ -109,37 +104,37 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
             }
         });
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-
-                QuantityDialogBinding quantityDialogBinding = QuantityDialogBinding.inflate(LayoutInflater.from(context));
-                AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setView(quantityDialogBinding.getRoot())
-                        .create();
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-
-                quantityDialogBinding.noBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-                quantityDialogBinding.yesBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cart.removeItem(product);
-                        notifyDataSetChanged();
-                        dialog.dismiss();
-                    }
-                });
-
-                return true;
-
-            }
-        });
+//        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//
+//                QuantityDialogBinding quantityDialogBinding = QuantityDialogBinding.inflate(LayoutInflater.from(context));
+//                AlertDialog dialog = new AlertDialog.Builder(context)
+//                        .setView(quantityDialogBinding.getRoot())
+//                        .create();
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                dialog.show();
+//
+//                quantityDialogBinding.noBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                quantityDialogBinding.yesBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        cart.removeItem(product);
+//                        notifyDataSetChanged();
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                return true;
+//
+//            }
+//        });
 
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
