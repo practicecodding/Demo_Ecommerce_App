@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hamidul.demoecommerceapp.R;
 import com.hamidul.demoecommerceapp.adapters.CartAdapter;
@@ -28,6 +31,8 @@ public class CartActivity extends AppCompatActivity {
     CartAdapter cartAdapter;
     ArrayList<Product> products;
     Toast toast;
+    Cart cart;
+    ItemTouchHelper itemTouchHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +40,12 @@ public class CartActivity extends AppCompatActivity {
         binding = ActivityCartBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(binding.cartList);
+
         products = new ArrayList<>();
 
-        Cart cart = TinyCartHelper.getCart();
+        cart = TinyCartHelper.getCart();
 
         for (Map.Entry<Item, Integer> item: cart.getAllItemsWithQty().entrySet()){
 
@@ -69,6 +77,7 @@ public class CartActivity extends AppCompatActivity {
                 Product product = products.get(position);
                 cart.removeItem(product);
                 binding.subtotal.setText(String.format("BDT %.2f",cart.getTotalPrice()));
+
                 products.remove(position);
                 cartAdapter.notifyItemRemoved(position);
             }
@@ -79,6 +88,25 @@ public class CartActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            Product product = products.get(viewHolder.getAdapterPosition());
+            cart.removeItem(product);
+            binding.subtotal.setText(String.format("BDT %.2f",cart.getTotalPrice()));
+
+            products.remove(viewHolder.getAdapterPosition());
+            cartAdapter.notifyDataSetChanged();
+
+        }
+    };
 
 
     @Override
