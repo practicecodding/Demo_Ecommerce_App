@@ -70,6 +70,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if (cart.getItemNames().equals(name)){
+                    cart.addItem(currentProduct,1);
+                    binding.addToCartBtn.setEnabled(false);
+                    binding.addToCartBtn.setText("Added in cart");
+                }
+
                 cart.addItem(currentProduct,1);
                 binding.addToCartBtn.setEnabled(false);
                 binding.addToCartBtn.setText("Added in cart");

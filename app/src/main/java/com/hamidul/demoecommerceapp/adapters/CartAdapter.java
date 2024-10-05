@@ -1,6 +1,9 @@
 package com.hamidul.demoecommerceapp.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.hamidul.demoecommerceapp.R;
 import com.hamidul.demoecommerceapp.databinding.ItemCartBinding;
+import com.hamidul.demoecommerceapp.databinding.QuantityDialogBinding;
 import com.hamidul.demoecommerceapp.model.Product;
 import com.hishd.tinycart.model.Cart;
 import com.hishd.tinycart.util.TinyCartHelper;
@@ -25,11 +29,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
     Toast toast;
     CartListener cartListener;
     Cart cart;
+    OnItemClickListener listener;
 
     public interface CartListener {
 
         public void onQuantityChanged();
 
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        listener = onItemClickListener;
     }
 
     public CartAdapter(Context context, ArrayList<Product> products, CartListener cartListener) {
@@ -42,7 +55,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
     @NonNull
     @Override
     public cartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new cartViewHolder(LayoutInflater.from(context).inflate(R.layout.item_cart,parent,false));
+
+        View v = LayoutInflater.from(context).inflate(R.layout.item_cart,parent,false);
+
+        return new cartViewHolder(v,listener);
     }
 
     @Override
@@ -125,6 +141,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
 //                quantityDialogBinding.yesBtn.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View view) {
+//
+//
 //                        cart.removeItem(product);
 //                        notifyDataSetChanged();
 //                        dialog.dismiss();
@@ -221,9 +239,42 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
 
 
         ItemCartBinding binding;
-        public cartViewHolder(@NonNull View itemView) {
+        public cartViewHolder(@NonNull View itemView,OnItemClickListener listener) {
             super(itemView);
             binding = ItemCartBinding.bind(itemView);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    QuantityDialogBinding quantityDialogBinding = QuantityDialogBinding.inflate(LayoutInflater.from(context));
+                    AlertDialog dialog = new AlertDialog.Builder(context)
+                            .setView(quantityDialogBinding.getRoot())
+                            .create();
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+
+                    quantityDialogBinding.noBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    quantityDialogBinding.yesBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            listener.onItemClick(getAdapterPosition());
+
+                            dialog.dismiss();
+                        }
+                    });
+
+                    return false;
+                }
+            });
+
         }
     }
 

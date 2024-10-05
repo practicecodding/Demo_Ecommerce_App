@@ -62,6 +62,13 @@ public class CartActivity extends AppCompatActivity {
         binding.cartList.setLayoutManager(layoutManager);
         binding.cartList.addItemDecoration(itemDecoration);
         binding.cartList.setAdapter(cartAdapter);
+        cartAdapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                products.remove(position);
+                cartAdapter.notifyItemRemoved(position);
+            }
+        });
 
         binding.subtotal.setText(String.format("BDT %.2f",cart.getTotalPrice()));
 
