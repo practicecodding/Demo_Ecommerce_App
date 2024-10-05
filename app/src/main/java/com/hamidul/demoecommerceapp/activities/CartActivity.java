@@ -65,6 +65,10 @@ public class CartActivity extends AppCompatActivity {
         cartAdapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+
+                Product product = products.get(position);
+                cart.removeItem(product);
+                binding.subtotal.setText(String.format("BDT %.2f",cart.getTotalPrice()));
                 products.remove(position);
                 cartAdapter.notifyItemRemoved(position);
             }

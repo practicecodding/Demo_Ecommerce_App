@@ -266,7 +266,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.cartViewHolder
                         public void onClick(View view) {
 
                             listener.onItemClick(getAdapterPosition());
-
                             dialog.dismiss();
                         }
                     });
