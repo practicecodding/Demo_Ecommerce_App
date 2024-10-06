@@ -29,7 +29,7 @@ public class CartActivity extends AppCompatActivity {
 
     ActivityCartBinding binding;
     CartAdapter cartAdapter;
-    public static ArrayList<Product> products = new ArrayList<>();
+    ArrayList<Product> products = new ArrayList<>();
     Toast toast;
     Cart cart;
     ItemTouchHelper itemTouchHelper;
