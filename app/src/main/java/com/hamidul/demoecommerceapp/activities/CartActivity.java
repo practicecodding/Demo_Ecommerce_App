@@ -29,7 +29,7 @@ public class CartActivity extends AppCompatActivity {
 
     ActivityCartBinding binding;
     CartAdapter cartAdapter;
-    ArrayList<Product> products;
+    public static ArrayList<Product> products = new ArrayList<>();
     Toast toast;
     Cart cart;
     ItemTouchHelper itemTouchHelper;
@@ -120,6 +120,7 @@ public class CartActivity extends AppCompatActivity {
         toast = Toast.makeText(CartActivity.this,message,Toast.LENGTH_LONG);
         toast.show();
     }
+
 
 
 }

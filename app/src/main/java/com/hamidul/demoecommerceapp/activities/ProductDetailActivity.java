@@ -23,10 +23,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.hamidul.demoecommerceapp.R;
+import com.hamidul.demoecommerceapp.adapters.CartAdapter;
 import com.hamidul.demoecommerceapp.databinding.ActivityProductDetailBinding;
 import com.hamidul.demoecommerceapp.model.Product;
 import com.hamidul.demoecommerceapp.utils.Constants;
 import com.hishd.tinycart.model.Cart;
+import com.hishd.tinycart.model.Item;
 import com.hishd.tinycart.util.TinyCartHelper;
 
 import org.json.JSONArray;
@@ -35,11 +37,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
     ActivityProductDetailBinding binding;
-
     Product currentProduct;
     Toast toast;
 
@@ -69,12 +71,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         binding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (cart.getItemNames().equals(name)){
-                    cart.addItem(currentProduct,1);
-                    binding.addToCartBtn.setEnabled(false);
-                    binding.addToCartBtn.setText("Added in cart");
-                }
 
                 cart.addItem(currentProduct,1);
                 binding.addToCartBtn.setEnabled(false);
@@ -211,6 +207,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         toast = Toast.makeText(ProductDetailActivity.this,message,Toast.LENGTH_LONG);
         toast.show();
     }
+
 
 
 }
