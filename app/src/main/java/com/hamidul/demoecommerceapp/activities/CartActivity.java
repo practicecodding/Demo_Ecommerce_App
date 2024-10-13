@@ -44,18 +44,14 @@ public class CartActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(binding.cartList);
 
         products = new ArrayList<>();
-
         cart = TinyCartHelper.getCart();
 
         for (Map.Entry<Item, Integer> item: cart.getAllItemsWithQty().entrySet()){
 
             Product product = (Product) item.getKey();
             int quantity = item.getValue();
-
             product.setQuantity(quantity);
-
             products.add(product);
-
         }
 
         cartAdapter = new CartAdapter(CartActivity.this, products, new CartAdapter.CartListener() {
@@ -65,19 +61,18 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(this,layoutManager.getOrientation());
-        binding.cartList.setLayoutManager(layoutManager);
-        binding.cartList.addItemDecoration(itemDecoration);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,linearLayoutManager.getOrientation());
+        binding.cartList.setLayoutManager(linearLayoutManager);
+        binding.cartList.addItemDecoration(dividerItemDecoration);
         binding.cartList.setAdapter(cartAdapter);
+
         cartAdapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
                 Product product = products.get(position);
                 cart.removeItem(product);
                 binding.subtotal.setText(String.format("BDT %.2f",cart.getTotalPrice()));
-
                 products.remove(position);
                 cartAdapter.notifyItemRemoved(position);
             }
@@ -99,11 +94,12 @@ public class CartActivity extends AppCompatActivity {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
             Product product = products.get(viewHolder.getAdapterPosition());
+            Toast.makeText(CartActivity.this, product.getName()+" Successfully Deleted", Toast.LENGTH_SHORT).show();
             cart.removeItem(product);
             binding.subtotal.setText(String.format("BDT %.2f",cart.getTotalPrice()));
 
             products.remove(viewHolder.getAdapterPosition());
-            cartAdapter.notifyDataSetChanged();
+            cartAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
 
         }
     };

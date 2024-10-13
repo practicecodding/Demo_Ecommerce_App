@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getCarousel() {
-
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_CAROUSEL_URL, null, new Response.Listener<JSONArray>() {
             @Override
@@ -80,16 +79,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Server Error : "+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
         requestQueue.add(jsonArrayRequest);
-
 
     }
 
     void getProducts(){
-
         products = new ArrayList<>();
-
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_PRODUCTS_URL, null, new Response.Listener<JSONArray>() {
             @Override
@@ -128,16 +123,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Server Error : "+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
         requestQueue.add(jsonArrayRequest);
-
 
     }
 
     void getCategories(){
-
         arrayList = new ArrayList<>();
-
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, Constants.GET_CATEGORIES_URL, null, new Response.Listener<JSONArray>() {
             @Override
@@ -178,9 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Server Error : "+error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
         requestQueue.add(jsonArrayRequest);
-
 
     }
 
@@ -189,6 +178,5 @@ public class MainActivity extends AppCompatActivity {
         toast = Toast.makeText(MainActivity.this,message,Toast.LENGTH_LONG);
         toast.show();
     }
-
 
 }
